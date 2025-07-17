@@ -38,7 +38,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const year = new Date().getFullYear();
+  const [year, setYear] = useState(null);
   const sectionIds = ["home", "about", "skills", "education", "projects", "contact"];
   const sectionRefs = useRef({});
 
@@ -92,6 +92,16 @@ export default function Home() {
   // Helper class for glowing icons in contact info
   const contactIconStyle = { color: 'var(--color-accent)', fontSize: 26, filter: 'drop-shadow(0 0 8px var(--color-accent))' };
   const contactIconLargeStyle = { color: 'var(--color-accent)', fontSize: 32, filter: 'drop-shadow(0 0 8px var(--color-accent))' };
+
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
+
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+  if (!hydrated) return null; // or a loading spinner
 
   return (
     <>
@@ -404,7 +414,7 @@ export default function Home() {
               </span>
             ))}
           </div>
-          <div style={{ fontSize: "1rem", color: "#b0b0c3" }}>© {year} Abhishek Singh</div>
+          {year && <div style={{ fontSize: "1rem", color: "#b0b0c3" }}>© {year} Abhishek Singh</div>}
           <div style={{ fontSize: "0.9rem", color: "#b0b0c3" }}>Built with Next.js, React, and a passion for web development.</div>
         </div>
       </footer>
